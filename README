@@ -1,0 +1,116 @@
+Using with Modtronix SBC PIC 18.
+
+Ross's Comments from Summer 2008:
+To compile code make sure the right picc18.exe is in the enviroment variable 
+path, I'm using the pro trial version right now. the command to compile is:
+picc18 --chip=18F258 ain.c crc.c lcd.c i2c.c serial.c xtend.c delay.c config.c modbus.c main.c
+
+I don't think the order is to terribly important. I wrote a batch file that has
+this command in it, it should be in the output folder. The hex file created from
+ compilation is called whatever the first file you typed was .hex so right now
+its always ain.hex.
+
+
+USART Registers:
+RCIF - this is the recieve register flag, its what's polled in rcif_poll. When
+the recieve register fills up, this flag is set.
+
+The transmit reisters are used in serial.c but I've never touched them.
+
+TXSTA, RCSTA - contains 7 configuration bits for transmition and reception
+respectively, I don't think these will need to be fiddled with.
+
+SPBRG - Baud rate generator register.
+
+
+AIN Registers:
+ACON0, ADCON1 - configuration registers.
+
+ADON - this bit in ADCON0 turns the A/D on and off
+
+
+Pin notes from building daughter boards for the units:
+
+PIC Pin Assignments
+A0	
+A1	
+A2	
+A3	
+A4
+A5
+A6
+A7
+
+
+B0	Digital Input One
+B1	Digital Input Two
+B2	T2IN MAX202EB CAN TXD
+B3	R2OUT MAX202EB CAN RXD
+B4	XT09 RXLED
+B5	XT09 TXPWR
+B6	XT09 Config
+B7
+
+C0	XT09 Shutdown
+C1	XT09 Sleep
+C2	XT09 RTS
+C3	SCL - i2c.h
+C4	SDA - i2c.h
+C5	XT09 CTS
+C6	MaxStream DIN
+C7	MaxStream DOUT
+
+D0
+D1
+D2
+D3
+D4
+D5
+D6
+D7
+
+E0
+E1
+E2
+
+Old
+Digi 9Xtend Pins
+Pin	MaxStream		Daughter Board
+1	GND			GND
+2	VCC			VCC
+5	DIN			C6
+6	DO			C7
+7	SHDWN			C0
+8	SLEEP			C1
+10	RTS			C2
+
+New
+Digi 9Xtend Pins
+Pin	MaxStream		Daughter Board
+1	GND			GND
+2	VCC			VCC
+3	RXLED			C5
+4	TXPWR			D7
+5	DIN			C6
+6	DO			C7
+7	SHDWN			C0	
+8	SLEEP			C1
+9	CTS			D4
+10	RTS			C2
+11	CONFIG			D6
+
+Newest
+Digi 9Xtend Pins
+Pin	MaxStream		Daughter Board
+1	GND			GND
+2	VCC			VCC
+3	RXLED			B4
+4	TXPWR			B5
+5	DIN			C6
+6	DO			C7
+7	SHDWN			C0	
+8	SLEEP			C1
+9	CTS			C5
+10	RTS			C2
+11	CONFIG			B6
+
